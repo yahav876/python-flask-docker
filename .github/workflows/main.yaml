@@ -12,8 +12,7 @@ jobs:
       run: |
         docker build -f Dockerfile -t tikal-yahav:1.0.0 .
         docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
-        docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test
-        172.17.0.2
-        docker inspect -f '{{ .Config.Hostname }}' tikal-test
-        6095273a4e9b
+        docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test 172.17.0.2
+        docker inspect -f '{{ .Config.Hostname }}' tikal-test 6095273a4e9b
+        
     
