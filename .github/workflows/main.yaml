@@ -1,0 +1,13 @@
+name: Python application
+
+on: push
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      run: docker build -f Dockerfile -tag tikal-yahav:1.0.0 .
+    - name: Run the container 
+      run: docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
