@@ -19,7 +19,7 @@ Automate ci proccess of python app with github actions using dokcer.
 
 - Name - Is the name of your workflow "Python application" in our case.
 - on: push - means on each push action the workflow will execute.
-- jobs: build - We create a job called "Build" that will.
+- jobs: build - We create a job called "Build".
 - In each job we need to define a "Runner" , a Runner is a github hosted virtual machines to run workflows , each Runner needs an image to run on. 
 In this case we choose ubuntu-latest.
 - Steps section is where you actually use "Actions" of github community or you can create your own action , Here we are using a built in action called "actions/checkout@v2" to simply checkout our git repository to our OS env (ubuntu-latest).
