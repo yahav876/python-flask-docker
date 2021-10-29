@@ -2,7 +2,7 @@ name: Python application
 
 on: push
 env:
-  PASSWD: "${secrets.PASSWD}"
+  PASSWD: "${{secrets.PASSWD}}"
 
 jobs:
   build:
