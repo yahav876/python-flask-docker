@@ -22,9 +22,9 @@ We need to create a secret repository under Settigns > Secrets > New repository 
 - Name - Is the name of your workflow "Python application" in our case.
 - on: push - means on each push action the workflow will execute.
 - env: is where we declare the secrets we configured earlier ($USER and $PASSWD).
-- jobs: 
-       build - We create a job called "Build" where we building the docker image and push it.
-       run - We pull the image and run the container with few tests.
+- jobs: <br />
+       build - We create a job called "Build" where we building the docker image and push it.<br />
+       run - We pull the image and run the container with few tests. <br />
        Note - we create a "needs" under run build , it means that "run" job won't start until "build" job is done.
 - In each job we need to define a "Runner" , a Runner is a github hosted virtual machines to run workflows , each Runner needs an image to run on. 
 In this case we choose ubuntu-latest.
