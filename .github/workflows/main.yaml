@@ -14,7 +14,7 @@ jobs:
     - name: Build docker image & Run the container.
       run: |
 
-        echo "${PASSWD}"
+        docker login --username=yahav876 --password="${PASSWD}"
         docker build -f Dockerfile -t tikal-yahav:1.0.0 .
         docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
         
