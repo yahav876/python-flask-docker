@@ -17,7 +17,7 @@ jobs:
 
         docker login --username="${USER}" --password="${PASSWD}"
         docker build -f Dockerfile -t tikal-yahav:1.0.0 .
-        docker push yahav876/tikal-yahav:1.0.0
+        docker push tikal-yahav:1.0.0
         
 
   
