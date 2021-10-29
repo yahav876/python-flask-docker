@@ -2,6 +2,7 @@ name: Python application
 
 on: push
 env:
+  USER:  "${{secrets.USER}}"
   PASSWD: "${{secrets.PASSWD}}"
 
 jobs:
@@ -11,16 +12,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build docker image & Run the container.
+    - name: Build docker image.
       run: |
 
-        docker login --username=yahav876 --password="${PASSWD}"
+        docker login --username="${USER}" --password="${PASSWD}"
         docker build -f Dockerfile -t tikal-yahav:1.0.0 .
-        docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
+        docker push yahav876/tikal-yahav:1.0.0
         
-        # Test the container ip and hostname.
-        docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test
-        docker inspect -f '{{ .Config.Hostname }}' tikal-test 
+
+  
+  run:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull docker image and run the container
+        run: |
+          docker login --username="${USER}" --password="${PASSWD}"
+          docker run --name tikal-test -d -p 8080:8080 yahav876/tikal-yahav:1.0.0
+          
+          # Test the container ip and hostname.
+          docker ps 
+          docker exec -it tikal-test python -m unittest
+          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test
+          docker inspect -f '{{ .Config.Hostname }}' tikal-test 
+
+
   
         
     
