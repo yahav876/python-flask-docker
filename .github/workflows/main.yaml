@@ -10,6 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build docker image & Run the container.
       run: |
+
         docker build -f Dockerfile -t tikal-yahav:1.0.0 .
         docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
         
