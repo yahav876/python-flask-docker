@@ -1,6 +1,9 @@
 name: Python application
 
 on: push
+env:
+  PASSWD: password for docker-hub
+
 jobs:
   build:
 
@@ -11,6 +14,7 @@ jobs:
     - name: Build docker image & Run the container.
       run: |
 
+        echo "${PASSWD}"
         docker build -f Dockerfile -t tikal-yahav:1.0.0 .
         docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
         
