@@ -12,6 +12,8 @@ Automate ci proccess of python app with github actions using dokcer.
 1. Fork this repository to your github account - https://github.com/lvthillo/python-flask-docker
 2. Go to Settings > Actions and make sure "Allow all actions" is checked.
 3. In order to github-actions will work we need to create a folder called .github/workflows
+4. In this CI we need to make a login to our docker-hub account and push and pull the image from.
+We need to create a secret repository under Settigns > Secrets > New repository secret , put your secret name and value and click save.
 
 # Solution
 
@@ -19,7 +21,11 @@ Automate ci proccess of python app with github actions using dokcer.
 
 - Name - Is the name of your workflow "Python application" in our case.
 - on: push - means on each push action the workflow will execute.
-- jobs: build - We create a job called "Build".
+- env: is where we declare the secrets we configured earlier ($USER and $PASSWD).
+- jobs: 
+       build - We create a job called "Build" where we building the docker image and push it.
+       run - We pull the image and run the container with few tests.
+       Note - we create a "needs" under run build , it means that "run" job won't start until "build" job is done.
 - In each job we need to define a "Runner" , a Runner is a github hosted virtual machines to run workflows , each Runner needs an image to run on. 
 In this case we choose ubuntu-latest.
 - Steps section is where you actually use "Actions" of github community or you can create your own action , Here we are using a built in action called "actions/checkout@v2" to simply checkout our git repository to our OS env (ubuntu-latest).
@@ -31,6 +37,10 @@ Your main.yaml file should look like this :
 name: Python application
 
 on: push
+env:
+  USER:  "${{secrets.USER}}"
+  PASSWD: "${{secrets.PASSWD}}"
+
 jobs:
   build:
 
@@ -38,15 +48,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build docker image & Run the container.
+    - name: Build docker image.
       run: |
-
-        docker build -f Dockerfile -t tikal-yahav:1.0.0 .
-        docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
+        docker build -f Dockerfile -t yahav876/tikal-yahav:1.0.0 .
+        docker login --username="${USER}" --password="${PASSWD}"
+        docker push yahav876/tikal-yahav:1.0.0
         
-        # Test the container ip and hostname.
-        docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test
-        docker inspect -f '{{ .Config.Hostname }}' tikal-test 
+  run:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull docker image and run the container
+        run: |
+          docker login --username="${USER}" --password="${PASSWD}"
+          docker run --name tikal-test -d -p 8080:8080 yahav876/tikal-yahav:1.0.0
+          
+          # Test the container ip and hostname.
+          docker ps 
+          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test
+          docker inspect -f '{{ .Config.Hostname }}' tikal-test 
+
   
 ```
 2. When you done writing main.yaml , as we said earlier - make a push and the workflow will be executed.
