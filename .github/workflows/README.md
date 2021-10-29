@@ -16,10 +16,40 @@ Automate ci proccess of python app with github actions using dokcer.
 # Solution
 
 1. Building a simple workflow named main.yaml
+
 - Name - Is the name of your workflow "Python application" in our case.
 - on: push - means on each push action the workflow will execute.
-- 
+- jobs: build - We create a job called "Build" that will.
+- In each job we need to define a "Runner" , a Runner is a github hosted virtual machines to run workflows , each Runner needs an image to run on. 
+In this case we choose ubuntu-latest.
+- Steps section is where you actually use "Actions" of github community or you can create your own action , Here we are using a built in action called "actions/checkout@v2" to simply checkout our git repository to our OS env (ubuntu-latest).
+- We need to define a name for the step and we also define a "run" to be able run shell commands within our environment to build the docker image and run it.
 
-2. Use ubuntu image for the runner
-3. Check out the git repository
-4. Create a step that will Build the docker image and run it.
+Your main.yaml file should look like this :
+
+```
+name: Python application
+
+on: push
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build docker image & Run the container.
+      run: |
+
+        docker build -f Dockerfile -t tikal-yahav:1.0.0 .
+        docker run --name tikal-test -d -p 8080:8080 tikal-yahav:1.0.0
+        
+        # Test the container ip and hostname.
+        docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test
+        docker inspect -f '{{ .Config.Hostname }}' tikal-test 
+  
+```
+2. When you done writing main.yaml , as we said earlier - make a push and the workflow will be executed.
+- Go to Actions to watch your workflow for detailed information.
+- If the build run successfully he will be marked with green.
+
