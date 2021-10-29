@@ -30,7 +30,7 @@ jobs:
           
           # Test the container ip and hostname.
           docker ps 
-          docker exec -it tikal-test python -m unittest
+          docker exec tikal-test python -m unittest
           docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tikal-test
           docker inspect -f '{{ .Config.Hostname }}' tikal-test 
 
