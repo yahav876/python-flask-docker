@@ -27,12 +27,7 @@ We need to create a secret repository under Settigns > Secrets > New repository 
        build - We create a job called "Build" where we building the docker image and push it.<br />
        run - We pull the image and run the container with few tests. <br />
        Note - we create a "needs" under run build , it means that "run" job won't start until "build" job is done.
-=======
-- jobs: 
-build - We create a job called "Build" where we building the docker image and push it.
-run - We pull the image and run the container with few tests.
-Note - we create a "needs" under run build , it means that "run" job won't start until "build" job is done.
->>>>>>> e61a0773e824a5a28f8dc5f3a21dd764f666f646
+
 - In each job we need to define a "Runner" , a Runner is a github hosted virtual machines to run workflows , each Runner needs an image to run on. 
 In this case we choose ubuntu-latest.
 - Steps section is where you actually use "Actions" of github community or you can create your own action , Here we are using a built in action called "actions/checkout@v2" to simply checkout our git repository to our OS env (ubuntu-latest).
