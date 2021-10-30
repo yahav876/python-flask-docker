@@ -5,7 +5,7 @@ Hi , Here i will show you how to build a CI proccess with Github-Actions , In th
 
 # Problem description
 
-Automate ci proccess of python app with github actions using dokcer.
+Automate CI process of python app with github actions using dokcer.
 
 # Requirements
 
