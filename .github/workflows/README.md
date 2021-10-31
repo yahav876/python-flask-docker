@@ -16,7 +16,7 @@ Automate CI process of python app with github actions using dokcer.
 
 # Solution
 
-# 1. Building a simple workflow named main.yaml
+### 1. Building a simple workflow named main.yaml
 
 - Name - Is the name of your workflow "Python application" in our case.
 - on: push - means on each push action the workflow will execute.
@@ -72,7 +72,7 @@ jobs:
 
   
 ```
-# 2. When you done writing main.yaml , as we said earlier - make a push and the workflow will be executed.
+### 2. When you done writing main.yaml , as we said earlier - make a push and the workflow will be executed.
 - Go to Actions to watch your workflow for detailed information.
 - If the build run successfully he will be marked with green.
 
