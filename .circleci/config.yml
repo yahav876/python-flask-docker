@@ -13,6 +13,5 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run: |
-          docker build -f Dockerfile -t yahav876/tikal-yahav:1.0.0 .
-          
-      
+          docker build -f Dockerfile -t yahav876/test-yahav:1.0.0 .
+          docker run --name test-test -d -p 8080:8080 yahav876/test-yahav:1.0.0
