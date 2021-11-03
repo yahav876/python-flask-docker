@@ -7,7 +7,7 @@ workflow:
 jobs:
   build:
     docker:
-      - image: cimg/python:3.10.0
+      - image: cimg/base:2021.10
     steps:
       - checkout
       - run: |
