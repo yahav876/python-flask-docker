@@ -15,3 +15,4 @@ jobs:
       - run: |
           docker build -f Dockerfile -t yahav876/test-yahav:1.0.0 .
           docker run --name test-test -d -p 8080:8080 yahav876/test-yahav:1.0.0
+          docker exec test-test pytest
