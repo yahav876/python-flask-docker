@@ -10,6 +10,8 @@ jobs:
       - image: cimg/base:2021.10
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 19.03.13
       - run: |
           docker build -f Dockerfile -t yahav876/tikal-yahav:1.0.0 .
       
