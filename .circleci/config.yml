@@ -12,4 +12,5 @@ jobs:
       - checkout
       - run: |
           docker build -f Dockerfile -t yahav876/tikal-yahav:1.0.0 .
+          
       
